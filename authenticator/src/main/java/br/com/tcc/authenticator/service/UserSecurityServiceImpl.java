@@ -26,11 +26,12 @@ public class UserSecurityServiceImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		
 		System.out.println(getClass().getSimpleName());
-		List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();	
+		List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
 		list.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 
-		return new UserSecurity(1l, "admin", "$2a$10$2wfOV6M0dHvpi8OJD4w.6.apfbD2pAtrzFUfsNNNXqGATqtvjfaqu", list);
+		return new UserSecurity(1l, "admin", "$2a$10$6g2RuSrtZ25GRPrK82GBUu0.mbTYh2scuGLTu0d3TbGtGbZmLPjjW", list);
 	}
 
 }
