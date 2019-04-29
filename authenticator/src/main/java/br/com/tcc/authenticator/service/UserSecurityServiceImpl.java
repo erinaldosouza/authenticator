@@ -39,7 +39,7 @@ public class UserSecurityServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
 		InstanceInfo instanceInfo = eurekaClient.getNextServerFromEureka(appAccessManagementName, Boolean.FALSE);
-		ResponseEntity<UserAuthorityWrapper> responseEntity = requestHelper.doGet(instanceInfo.getHomePageUrl() + "api/users?login="+login);
+		ResponseEntity<UserAuthorityWrapper> responseEntity = requestHelper.doGet(instanceInfo.getHomePageUrl() + "api/users/"+login);
 		// System.err.println(responseEntity.getBody());
 		
 		UserAuthorityWrapper usersAuthoritiesWrapper = responseEntity.getBody();
