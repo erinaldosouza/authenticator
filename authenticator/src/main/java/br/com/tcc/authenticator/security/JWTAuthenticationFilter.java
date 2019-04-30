@@ -2,7 +2,6 @@ package br.com.tcc.authenticator.security;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -14,7 +13,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,8 +41,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			
 			UsernamePasswordAuthenticationToken token = 
 					   new UsernamePasswordAuthenticationToken(credential.getUsername(), credential.getPassword(), 	new ArrayList<>());
-			
-			System.out.println(getClass().getSimpleName());
 
 			return authenticationManager.authenticate(token);
 			
@@ -61,7 +57,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		String username  = ((UserSecurity) authResult.getPrincipal()).getUsername();
 		String token = jwtUtil.generateToken(username);
 		res.addHeader("Authentication", "Bearer " + token);
-	}
+	}	
 	
 //	private class JWTAuthenticationFailureHandler implements AuthenticationFailureHandler {
 //		 
