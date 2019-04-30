@@ -28,7 +28,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	
 	@Autowired
 	public JWTAuthenticationFilter(JWTUtil jwtUtil, AuthenticationManager authenticationManager) {
-    	setAuthenticationFailureHandler(new JWTAuthenticationFailureHandler());
+    //	setAuthenticationFailureHandler(new JWTAuthenticationFailureHandler());
 		this.jwtUtil = jwtUtil;
 		this.authenticationManager = authenticationManager;
 	}
@@ -61,26 +61,25 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		String username  = ((UserSecurity) authResult.getPrincipal()).getUsername();
 		String token = jwtUtil.generateToken(username);
 		res.addHeader("Authentication", "Bearer " + token);
-		System.out.println(getClass().getSimpleName());
 	}
 	
-	private class JWTAuthenticationFailureHandler implements AuthenticationFailureHandler {
-		 
-        @Override
-        public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
-                throws IOException, ServletException {
-            response.setStatus(401);
-            response.setContentType("application/json"); 
-            response.getWriter().append(json());
-        }
-        
-        private String json() {
-            return "{\"timestamp\": \"" + new Date() + "\","
-                + "\"status\": 401, "
-                + "\"error\": \"Unauthorized\", "
-                + "\"message\": \"No message available\", "
-                + "\"path\": \"/login\"}";
-        }
-    }
+//	private class JWTAuthenticationFailureHandler implements AuthenticationFailureHandler {
+//		 
+//        @Override
+//        public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
+//                throws IOException, ServletException {
+//            response.setStatus(401);
+//            response.setContentType("application/json"); 
+//            response.getWriter().append(json());
+//        }
+//        
+//        private String json() {
+//            return "{\"timestamp\": \"" + new Date() + "\","
+//                + "\"status\": 401, "
+//                + "\"error\": \"Unauthorized\", "
+//                + "\"message\": \"No message available\", "
+//                + "\"path\": \"/login\"}";
+//        }
+//    }
 
 }

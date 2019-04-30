@@ -1,9 +1,13 @@
 package br.com.tcc.authenticator.security;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import br.com.tcc.authenticator.to.UserAuthorityTO;
 
 public class UserSecurity implements UserDetails {
 
@@ -12,15 +16,23 @@ public class UserSecurity implements UserDetails {
 	private Long id;
 	private String username;
 	private String password;
+	private String name;
+	private String lastName;
 	private Collection<? extends GrantedAuthority> authorities;
 
+
 	
-	public UserSecurity(Long id, String username, String password, Collection<? extends GrantedAuthority> authorities) {
+	public UserSecurity(UserAuthorityTO user) {
 		super();
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.authorities = authorities;
+		this.id = user.getId();
+		this.username = user.getName();
+		this.password = user.getPassword();
+		this.name = user.getName();
+		this.lastName = user.getLastName();
+		this.authorities = user.getGroups().stream()
+							   .map(g -> new SimpleGrantedAuthority(g.getName()))
+							   .collect(Collectors.toSet());	
+		
 	}
 
 	@Override
@@ -80,4 +92,19 @@ public class UserSecurity implements UserDetails {
 		this.authorities = authorities;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 }
