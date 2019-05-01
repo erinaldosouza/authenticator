@@ -29,8 +29,8 @@ public class UserSecurity implements UserDetails {
 		this.password = user.getPassword();
 		this.name = user.getName();
 		this.lastName = user.getLastName();
-		this.authorities = user.getGroups().stream()
-							   .map(g -> new SimpleGrantedAuthority(g.getName()))
+		this.authorities = user.getRoutes().stream()
+							   .map(r -> new SimpleGrantedAuthority(r.getAppName() + r.getLink() + r.getAuthorization()))
 							   .collect(Collectors.toSet());	
 		
 	}

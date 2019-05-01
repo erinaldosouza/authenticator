@@ -1,6 +1,7 @@
 package br.com.tcc.authenticator.to;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -86,5 +87,18 @@ public class UserAuthorityTO implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public List<RouteTO> getRoutes() {
+		List<RouteTO> routes = new LinkedList<RouteTO>();
+		if(groups != null) {
+			
+			this.groups.forEach(g -> 
+				routes.addAll(g.getRoutes())
+			);
+
+		}
+		
+		return routes;
 	}
 }
