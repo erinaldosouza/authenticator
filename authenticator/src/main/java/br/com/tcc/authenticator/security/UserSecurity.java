@@ -30,7 +30,7 @@ public class UserSecurity implements UserDetails {
 		this.name = user.getName();
 		this.lastName = user.getLastName();
 		this.authorities = user.getRoutes().stream()
-							   .map(r -> new SimpleGrantedAuthority(r.getAppName() + r.getLink() + r.getAuthorization()))
+							   .map(r -> new SimpleGrantedAuthority(r.getAppName() + r.getLink().replace("$", "[0-9A-Za-z]{0,}/{0,1}") + r.getAuthorization()))
 							   .collect(Collectors.toSet());	
 		
 	}
