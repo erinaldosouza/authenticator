@@ -12,7 +12,7 @@ import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 
 import br.com.tcc.authenticator.helper.RequestHelper;
-import br.com.tcc.authenticator.security.UserSecurity;
+import br.com.tcc.authenticator.security.UserRestSecurity;
 import br.com.tcc.authenticator.to.UserAuthorityWrapper;
 
 @Service
@@ -40,7 +40,7 @@ public class UserSecurityRestServiceImpl implements UserDetailsService {
 			throw new UsernameNotFoundException("Incorrect user or password");
 		}
 
-		return new UserSecurity(usersAuthoritiesWrapper.getUser());
+		return new UserRestSecurity(usersAuthoritiesWrapper.getUser());
 	}
 
 }

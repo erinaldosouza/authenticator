@@ -6,29 +6,30 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.netflix.discovery.EurekaClient;
+import br.com.tcc.authenticator.model.UserApp;
+import br.com.tcc.authenticator.repository.UserAppRepository;
+import br.com.tcc.authenticator.security.UserDatabaseSecurity;
 
-import br.com.tcc.authenticator.helper.RequestHelper;
-import br.com.tcc.authenticator.security.UserSecurity;
-
-@Service("userSecurityDaoService")
-public class UserSecurityDaoServiceImpl implements UserDetailsService {
-
-
+@Service("userSecurityDatabaseService")
+public class UserSecurityDatabaseServiceImpl implements UserDetailsService {
+	
+	private UserAppRepository repository;
 	
 	@Autowired
-	public UserSecurityDaoServiceImpl(RequestHelper requestHelper, EurekaClient eurekaClient) {
-
+	public UserSecurityDatabaseServiceImpl(UserAppRepository repository) {
+		this.repository = repository;
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+
+		UserApp user = repository.findByLogin(login);
 		
-		if(login == null) {
+		if(user == null) {
 			throw new UsernameNotFoundException("Incorrect user or password");
 		}
 
-		return new UserSecurity(null);
+		return new UserDatabaseSecurity(user);
 	}
 
 }

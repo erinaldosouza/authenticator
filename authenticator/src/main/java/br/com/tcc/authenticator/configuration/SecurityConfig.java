@@ -1,6 +1,7 @@
 package br.com.tcc.authenticator.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -20,12 +21,13 @@ import br.com.tcc.authenticator.security.JWTUtil;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	
+		
 	private final UserDetailsService userDetailsService;
 	private final JWTUtil jwtUtil;
 	 
 	@Autowired
-	public SecurityConfig(UserDetailsService userDetailsService, JWTUtil jwtUtil) {
+	//TODO use conditional properties
+	public SecurityConfig(@Qualifier("userSecurityDatabaseService") UserDetailsService userDetailsService, JWTUtil jwtUtil) {
 		this.userDetailsService = userDetailsService;
 		this.jwtUtil = jwtUtil;
 	}

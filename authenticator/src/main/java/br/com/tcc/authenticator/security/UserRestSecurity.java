@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import br.com.tcc.authenticator.to.UserAuthorityTO;
 
-public class UserSecurity implements UserDetails {
+public class UserRestSecurity implements UserDetails {
 
 	private static final long serialVersionUID = 2359745374924951377L;
 	
@@ -22,7 +22,7 @@ public class UserSecurity implements UserDetails {
 
 
 	
-	public UserSecurity(UserAuthorityTO user) {
+	public UserRestSecurity(UserAuthorityTO user) {
 		super();
 		this.id = user.getId();
 		this.username = user.getName();
