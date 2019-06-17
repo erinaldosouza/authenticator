@@ -35,17 +35,14 @@ public class RequestHelper {
 		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		
 		httpHeaders.setBasicAuth(appAccessManagerUser, appAccessManagerPassword);		
-		HttpEntity<String> entity = new HttpEntity<>("parameters", httpHeaders);
+		HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
 		
 		return entity;
 	}
 	
 	private ResponseEntity<UserAuthorityWrapper> doRequestDefault(String url, HttpMethod method, Object... body) {
-		HttpEntity<String> entity = this.getDefaultJsonHeaders();	
-				
-		ResponseEntity<UserAuthorityWrapper> response = restTemplate
-				                     .exchange(url, method, entity, new ParameterizedTypeReference<UserAuthorityWrapper>(){});
-		return response;
+		HttpEntity<String> entity = this.getDefaultJsonHeaders();				
+		return restTemplate.exchange(url, method, entity, new ParameterizedTypeReference<UserAuthorityWrapper>(){});
 		
 	}
 	

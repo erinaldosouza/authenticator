@@ -16,7 +16,7 @@ import br.com.tcc.authenticator.security.UserSecurity;
 import br.com.tcc.authenticator.to.UserAuthorityWrapper;
 
 @Service
-public class UserSecurityServiceImpl implements UserDetailsService {
+public class UserSecurityRestServiceImpl implements UserDetailsService {
 	
 	@Value("${app.access.management.name}")
 	private String appAccessManagementName;
@@ -25,7 +25,7 @@ public class UserSecurityServiceImpl implements UserDetailsService {
 	private final RequestHelper requestHelper;
 	
 	@Autowired
-	public UserSecurityServiceImpl(RequestHelper requestHelper, EurekaClient eurekaClient) {
+	public UserSecurityRestServiceImpl(RequestHelper requestHelper, EurekaClient eurekaClient) {
 		this.requestHelper = requestHelper;
 		this.eurekaClient  = eurekaClient;
 	}
