@@ -3,6 +3,7 @@ package br.com.tcc.authenticator.security;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -52,6 +53,11 @@ public class UserDatabaseSecurity implements UserDetails {
 
 	@Override
 	public String getPassword() {
+		// The application that generates the passwords stores it in a different format.
+		// Stored format: 'bREAL_BCRYPT_ENCODED_PASSWORD'. This method remove the marks e returns just the REAL_BCRYPT_ENCODED_PASSWORD
+		if(StringUtils.isNotBlank(password)) {
+			this.password = this.password.substring(2, password.length()-1);
+		}
 		return this.password;
 	}
 
