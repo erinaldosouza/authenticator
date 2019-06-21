@@ -19,9 +19,8 @@ public class UserDatabaseSecurity implements UserDetails {
 	private String password;
 	private String name;
 	private String lastName;
+	private UserApp userApp;
 	private Collection<? extends GrantedAuthority> authorities;
-
-
 	
 	public UserDatabaseSecurity(UserApp user) {
 		super();
@@ -30,17 +29,24 @@ public class UserDatabaseSecurity implements UserDetails {
 		this.password = user.getPassword();
 		this.name = user.getName();
 		this.lastName = user.getLastName();
-		this.authorities = user.getRoutes().stream()
-							   .map(r -> new SimpleGrantedAuthority(r.getAppName() + r.getLink().replace("$", "[0-9A-Za-z]{0,}/{0,1}") + r.getAuthorization()))
-							   .collect(Collectors.toSet());	
-		
+		this.userApp = user;		
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
+		if(authorities == null) {
+			this.buildAuthorities();
+		}
+
 		return this.authorities;
 	}
 
+	private void buildAuthorities() {
+		this.authorities = this.userApp.getRoutes().stream()
+				   .map(r -> new SimpleGrantedAuthority(r.getAppName() + r.getLink().replace("$", "[0-9A-Za-z]{0,}/{0,1}") + r.getAuthorization()))
+				   .collect(Collectors.toSet());	
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -113,5 +119,7 @@ public class UserDatabaseSecurity implements UserDetails {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+	
+	
 
 }
