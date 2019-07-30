@@ -36,11 +36,14 @@ public class UserSecurityRestServiceImpl implements UserDetailsService {
 		ResponseEntity<UserAuthorityWrapper> responseEntity = requestHelper.doGet(instanceInfo.getHomePageUrl() + "api/user/"+login);
 		UserAuthorityWrapper usersAuthoritiesWrapper = responseEntity.getBody();
 		
-		if(usersAuthoritiesWrapper.getUser() == null) {
-			throw new UsernameNotFoundException("Incorrect user or password");
+		if(usersAuthoritiesWrapper != null) {
+			if(usersAuthoritiesWrapper.getUser() != null) {
+				return new UserRestSecurity(usersAuthoritiesWrapper.getUser());
+			}
 		}
+		
+		throw new UsernameNotFoundException("Incorrect user or password");	
 
-		return new UserRestSecurity(usersAuthoritiesWrapper.getUser());
 	}
 
 }

@@ -21,7 +21,7 @@ public class WebConfigurations {
 		clientHttpRequestFactory.setConnectTimeout(5000);
 		
 		// Read timeout
-		clientHttpRequestFactory.setReadTimeout(0);
+		// clientHttpRequestFactory.setReadTimeout(0);
 		return clientHttpRequestFactory;
 	}
 }
